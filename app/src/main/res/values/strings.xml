@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">LocalPoints</string>
+    <string name="navigation_map">Mapa</string>
+    <string name="navigation_list">Lista</string>
+    <string name="navigation_forum">Foro</string>
+    <string name="navigation_settings">Ajustes</string>
 </resources>
