@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <FrameLayout
+        android:id="@+id/frame_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
@@ -21,8 +22,16 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/cp_green"
+        app:itemHorizontalTranslationEnabled="false"
+        app:elevation="1dp"
+        app:itemIconSize="32dp"
+        app:itemIconTint="@color/bottom_nav_colors"
+        app:itemTextColor="@color/cp_yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu"/>
+        app:itemActiveIndicatorStyle="@color/cp_brown"
+        app:menu="@menu/bottom_nav_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
