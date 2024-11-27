@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "820620021824",
+    "project_id": "localpoints",
+    "storage_bucket": "localpoints.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:820620021824:android:935bbae9321a6fb1a40fa5",
+        "android_client_info": {
+          "package_name": "com.mulweb.localpoints"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "820620021824-hh4ii694ulnb7mtqfrep38lblvvebbqp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRTCsAksdx277iRx04NsqUrY7-_5jPR7g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "820620021824-hh4ii694ulnb7mtqfrep38lblvvebbqp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
