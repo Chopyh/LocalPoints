@@ -2,6 +2,7 @@ package com.mulweb.localpoints.auth.google.login;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -58,14 +59,12 @@ public class LoginFragment extends Fragment {
             signInEmail(email, password);
             if (mAuth.getCurrentUser() != null) {
                 Toast.makeText(getContext(), "Inicio de sesión satisfactorio", Toast.LENGTH_SHORT).show();
-                startActivity(new MainActivity().getIntent());
+                startActivity(new Intent(authActivity, MainActivity.class));
                 authActivity.finish();
             }
         });
 
         signUpButton.setOnClickListener(v -> {
-            Log.println(Log.INFO, "Register", "Sign up");
-            Toast.makeText(getContext(), "Sign up", Toast.LENGTH_SHORT).show();
             authActivity.setBackButtonVisibility(true);
             authActivity.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.auth_layout, new RegisterFragment(authActivity))
@@ -83,7 +82,6 @@ public class LoginFragment extends Fragment {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "signInWithEmail:success");
-                        authActivity.finish();
                     } else {
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
                         Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
