@@ -2,6 +2,7 @@ package com.mulweb.localpoints;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,8 @@ import com.mulweb.localpoints.auth.google.AuthActivity;
 import com.mulweb.localpoints.fragment.main.ForumFragment;
 import com.mulweb.localpoints.fragment.main.ListFragment;
 import com.mulweb.localpoints.fragment.main.SettingsFragment;
+
+import sampledata.TestConnection;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
         if (currentUser == null) {
             startActivity(new Intent(this, AuthActivity.class));
             finish();
+        }
+
+        if (TestConnection.isNetworkAvailable(this)) {
+            loadFragment(new MapFragment());
+        } else {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
         }
 
         loadFragment(new MapFragment());
@@ -67,4 +76,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
 }
