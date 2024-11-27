@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+    id("com.google.gms.google-services")
 }
 
 buildscript {
@@ -34,7 +35,7 @@ android {
 
         // A properties file containing default secret values. This file can be
         // checked in version control.
-        defaultPropertiesFileName = "local.defaults.properties"
+        defaultPropertiesFileName = "local.properties"
 
         // Configure which keys should be ignored by the plugin by providing regular expressions.
         // "sdk.dir" is ignored by default.
@@ -44,6 +45,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 
     buildTypes {
@@ -62,13 +64,21 @@ android {
 }
 
 dependencies {
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
 
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-auth")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.play.services.maps)
     implementation(libs.preference)
+    implementation(libs.annotation)
+    implementation(libs.lifecycle.livedata.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
