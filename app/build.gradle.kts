@@ -72,6 +72,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation("com.google.firebase:firebase-database")
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.play.services.maps)

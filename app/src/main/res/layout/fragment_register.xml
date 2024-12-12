@@ -103,12 +103,26 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/ed_birthdate"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="date" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/ed_birthdate"
+                    android:layout_width="301dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="date" />
+
+                <Button
+                    android:id="@+id/btn_datePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

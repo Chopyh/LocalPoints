@@ -11,13 +11,17 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mulweb.localpoints.auth.google.AuthActivity;
 import com.mulweb.localpoints.fragment.main.ForumFragment;
 import com.mulweb.localpoints.fragment.main.ListFragment;
 import com.mulweb.localpoints.fragment.main.MapFragment;
 import com.mulweb.localpoints.fragment.main.SettingsFragment;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,13 +36,17 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        Locale locale = new Locale("es", "ES");
+        Locale.setDefault(locale);
+
         BottomNavigationView nav = findViewById(R.id.bottomNavigationView);
+
+        FirebaseApp.initializeApp(this);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser == null) {
             startActivity(new Intent(this, AuthActivity.class));
-            finish();
         }
 
         loadFragment(new MapFragment());
