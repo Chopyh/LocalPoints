@@ -75,8 +75,6 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-
-
     public void signInEmail(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
