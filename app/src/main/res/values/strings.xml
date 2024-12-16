@@ -20,4 +20,16 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">"Correo electrónico:"</string>
+    <string name="prompt_password">"Contraseña:"</string>
+    <string name="action_sign_in">Iniciar Sesión</string>
+    <string name="action_sign_up">Registrarse</string>
+    <string name="welcome">"¡Bienvenido!"</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="prompt_username">Usuario:</string>
+    <string name="prompt_completename">Nombre y apellidos:</string>
+    <string name="prompt_birth">Fecha de nacimiento:</string>
+    <string name="terms">"Acepto los términos y condiciones"</string>
+    <string name="privacy">"Acepto la política de privacidad"</string>
 </resources>
