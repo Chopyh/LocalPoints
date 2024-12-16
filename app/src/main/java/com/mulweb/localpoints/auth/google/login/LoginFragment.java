@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mulweb.localpoints.MainActivity;
 import com.mulweb.localpoints.R;
@@ -26,7 +27,7 @@ import java.util.concurrent.Executor;
 public class LoginFragment extends Fragment {
 
     private FirebaseAuth mAuth;
-    private AuthActivity authActivity;
+    private final AuthActivity authActivity;
 
     public LoginFragment(AuthActivity authActivity) {
         this.authActivity = authActivity;
@@ -49,7 +50,7 @@ public class LoginFragment extends Fragment {
         signInButton.setOnClickListener(v -> {
             Log.println(Log.INFO, "LoginFragment", "Sign in");
             String email = ((EditText) view.findViewById(R.id.ed_Email)).getText().toString();
-            String password = ((EditText) view.findViewById(R.id.et_Password)).getText().toString();
+            String password = ((EditText) view.findViewById(R.id.et_password)).getText().toString();
 
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(getContext(), "Por favor rellena todos los campos", Toast.LENGTH_SHORT).show();
