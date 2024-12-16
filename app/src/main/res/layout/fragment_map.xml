@@ -17,4 +17,4 @@
     map:uiTiltGestures="true"
     map:uiZoomControls="true"
     map:uiZoomGestures="true"
-    tools:context=".MapFragment" />
+    tools:context=".fragment.main.MapFragment" />

@@ -2,6 +2,7 @@ package com.mulweb.localpoints;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,8 @@ import com.mulweb.localpoints.fragment.main.ForumFragment;
 import com.mulweb.localpoints.fragment.main.ListFragment;
 import com.mulweb.localpoints.fragment.main.MapFragment;
 import com.mulweb.localpoints.fragment.main.SettingsFragment;
+
+import java.util.Locale;
 
 import sampledata.TestConnection;
 
