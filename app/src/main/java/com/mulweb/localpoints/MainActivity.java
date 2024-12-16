@@ -124,43 +124,44 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         nMap.setOnMapClickListener(latLng -> {
             // Clear existing markers
             nMap.clear();
-            // Add a marker at the selected location
-            nMap.addMarker(new MarkerOptions().position(latLng).title("Ubicación seleccionada"));
+
             double lat = latLng.latitude; // Get latitude
             double lng = latLng.longitude; // Get longitude
 
             // Create a LocationObject with the selected coordinates
             LocationObject locationObject = new LocationObject(lat, lng);
+            // Add a marker at the selected location
+            nMap.addMarker(new MarkerOptions().position(latLng).title("Selected location"));
 
             // Fetch place details using Places API
             fetchPlaceDetails(locationObject);
         });
     }
 
-    // Fetch place details using Places API
-    private void fetchPlaceDetails(LocationObject locationObject) {
-        List<Place.Field> placeFields = List.of(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.PHONE_NUMBER, Place.Field.RATING);
+private String fetchPlaceDetails(LocationObject locationObject) {
+    List<Place.Field> placeFields = List.of(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.PHONE_NUMBER, Place.Field.RATING);
 
-        // Create a request to fetch place details
-        FetchPlaceRequest request = FetchPlaceRequest.newInstance(locationObject.toString(), placeFields);
+    // Create a request to fetch place details
+    FetchPlaceRequest request = FetchPlaceRequest.newInstance(locationObject.toString(), placeFields);
 
-        PlacesClient placesClient = Places.createClient(this);
-        placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
-            Place place = response.getPlace();
-            String placeName = place.getName(); // Get place name
-            String placeAddress = place.getAddress(); // Get place address
-            String placePhone = place.getPhoneNumber(); // Get place phone number
-            double placeRating = place.getRating(); // Get place rating
+    PlacesClient placesClient = Places.createClient(this);
+    placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
+        Place place = response.getPlace();
+        String placeName = place.getName(); // Get place name
+        String placeAddress = place.getAddress(); // Get place address
+        String placePhone = place.getPhoneNumber(); // Get place phone number
+        double placeRating = place.getRating(); // Get place rating
 
-            // Log and display place details
-            String placeDetails = "Nombre: " + placeName + ", Dirección: " + placeAddress + ", Teléfono: " + placePhone + ", Calificación: " + placeRating;
-            Log.d("placeDetails", placeDetails);
-            Toast.makeText(this, "Nombre: " + placeName + ", Dirección: " + placeAddress +
-                    ", Teléfono: " + placePhone + ", Calificación: " + placeRating, Toast.LENGTH_LONG).show();
-        }).addOnFailureListener((exception) -> {
-            Log.e("placeDetails", "Place not found: " + exception.getMessage());
-        });
-    }
+        // Log and display place details
+        String placeDetails = "Nombre: " + placeName + ", Dirección: " + placeAddress + ", Teléfono: " + placePhone + ", Calificación: " + placeRating;
+        Log.d("placeDetails", placeDetails);
+        Toast.makeText(this, placeDetails, Toast.LENGTH_LONG).show();
+    }).addOnFailureListener((exception) -> {
+        Log.e("placeDetails", "Place not found: " + exception.getMessage());
+    });
+
+    return locationObject.toString();
+}
 
     // Load the specified fragment
     private boolean loadFragment(Fragment fragment) {
