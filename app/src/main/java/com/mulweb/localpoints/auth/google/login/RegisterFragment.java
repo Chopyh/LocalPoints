@@ -14,13 +14,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mulweb.localpoints.MainActivity;
 import com.mulweb.localpoints.R;
 import com.mulweb.localpoints.auth.google.AuthActivity;
+import com.mulweb.localpoints.components.DatePickerFragment;
+import com.mulweb.localpoints.entities.User;
 
 
-public class RegisterFragment extends Fragment {
-    private AuthActivity authActivity;
+public class RegisterFragment extends Fragment implements DatePickerFragment.DatePickerListener {
+    private final AuthActivity authActivity;
     private FirebaseAuth mauth;
 
     public RegisterFragment(AuthActivity authActivity) {
@@ -40,12 +43,23 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         Button signUpButton = view.findViewById(R.id.btn_register);
+        Button datePicker = view.findViewById(R.id.btn_datePicker);
+
+        datePicker.setOnClickListener(v -> {
+            var newFragment = new DatePickerFragment();
+            newFragment.setDatePickerListener(this);
+            newFragment.show(getParentFragmentManager(), "datePicker");
+        });
+
         signUpButton.setOnClickListener(v -> {
             CheckBox checkBox = view.findViewById(R.id.chb_terms);
             CheckBox checkBox2 = view.findViewById(R.id.chb_privacy);
 
             EditText emailEditText = view.findViewById(R.id.ed_Email);
             EditText passwordEditText = view.findViewById(R.id.ed_password);
+            EditText userNameEditText = view.findViewById(R.id.ed_username);
+            EditText fullNameEditText = view.findViewById(R.id.ed_fullname);
+            EditText dateEditText = view.findViewById(R.id.ed_birthdate);
 
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
@@ -55,16 +69,30 @@ public class RegisterFragment extends Fragment {
                 return;
             }
 
-            mauth.createUserWithEmailAndPassword(email, password);
-            mauth.signInWithEmailAndPassword(email, password);
+            mauth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            }).addOnSuccessListener(authResult -> {
+                User user = new User(
+                        userNameEditText.getText().toString(),
+                        fullNameEditText.getText().toString(),
+                        email,
+                        dateEditText.getText().toString()
+                );
 
-            if (mauth.getCurrentUser() != null) {
-                authActivity.startActivity(new MainActivity().getIntent());
-                authActivity.finish();
-            } else {
-                Toast.makeText(authActivity, "Error al registrar usuario", Toast.LENGTH_SHORT).show();
-            }
+                var userId = mauth.getCurrentUser().getUid();
+                var databaseReference = FirebaseDatabase.getInstance().getReference();
+                databaseReference.child("users").child(userId).setValue(user);
+
+                Toast.makeText(authActivity, "Usuario registrado", Toast.LENGTH_SHORT).show();
+                mauth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        authActivity.finish();
+                    } else {
+                        Toast.makeText(authActivity, "Ha ocurrido un error. \nPruebe a registrarse más tarde.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
         });
+
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -74,7 +102,14 @@ public class RegisterFragment extends Fragment {
                         .commit();
             }
         };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
         return view;
+    }
+
+    @Override
+    public void onDateSet(int year, int month, int day) {
+        EditText dateEditText = getView().findViewById(R.id.ed_birthdate);
+        String date = day + "/" + month + "/" + year;
+        dateEditText.setText(date);
     }
 }
