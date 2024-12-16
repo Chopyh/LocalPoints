@@ -1,5 +1,6 @@
 package com.mulweb.localpoints.auth.google.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.*;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mulweb.localpoints.MainActivity;
 import com.mulweb.localpoints.R;
 import com.mulweb.localpoints.auth.google.AuthActivity;
 import com.mulweb.localpoints.components.DatePickerFragment;
@@ -91,6 +93,7 @@ public class RegisterFragment extends Fragment implements DatePickerFragment.Dat
                 } catch (FirebaseAuthEmailException e) {
                     emailEditText.setError("El email no es válido");
                     Toast.makeText(authActivity, "El email no es válido", Toast.LENGTH_SHORT).show();
+                } catch (NullPointerException ignored) {
                 } catch (Exception e) {
                     Toast.makeText(authActivity, "Ha ocurrido un error. \nPruebe a registrarse más tarde.", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
@@ -109,7 +112,7 @@ public class RegisterFragment extends Fragment implements DatePickerFragment.Dat
 
                 Toast.makeText(authActivity, "Usuario registrado", Toast.LENGTH_SHORT).show();
                 mauth.signInWithEmailAndPassword(email, password);
-                authActivity.finish();
+                startActivity(new Intent(authActivity, MainActivity.class));
             });
         });
 
